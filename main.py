@@ -16,15 +16,15 @@ def get_sec_to_time(h, m, hh, mm):
         dm = m-mm
         sec = abs(dh*3600+dm*60)
 
-    print("Current Time =", hh, mm)
-    print("Selected Time =", h, m)
-    print("Result =", sec)
+    #print("Current Time =", hh, mm)
+    #print("Selected Time =", h, m)
+    #print("Result =", sec)
 
     seconds = now.timestamp()
     test = now.fromtimestamp(seconds)
     test2 = now.fromtimestamp(seconds + sec)
-    print("Current time =", str(test).split(" ")[1])
-    print("Calculated time", str(test2).split(" ")[1])
+    #print("Current time =", str(test).split(" ")[1])
+    #print("Calculated time", str(test2).split(" ")[1])
 
     return sec
 
