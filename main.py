@@ -40,6 +40,8 @@ def cancel_time():
     os.system("shutdown -a")
 
 root = tk.Tk()
+root.title("Shutdown scheduler")
+root.iconbitmap("icon.ico")
 frm = tk.Frame(root)
 frm.grid()
 
