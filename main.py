@@ -1,7 +1,4 @@
 import tkinter as tk
-from tktimepicker import SpinTimePickerModern, SpinTimePickerOld
-from tktimepicker import constants
-
 import os
 from datetime import datetime 
 
@@ -43,22 +40,23 @@ def cancel_time():
     os.system("shutdown -a")
 
 root = tk.Tk()
+frm = tk.Frame(root)
+frm.grid()
 
-time = ()
+_now = datetime.now()
 
-time_lbl = tk.Label(root, text="Time:")
-time_lbl.pack()
+hour = tk.StringVar(root)
+hour.set(_now.strftime("%H"))
+spin_hour = tk.Spinbox(frm, increment=1, from_=0, to=23, textvariable=hour)
+spin_hour.grid(column=0, row=0)
 
-spin_hour = tk.Spinbox(root, increment=1, from_=0, to=23)
-spin_hour.pack()
+min = tk.StringVar(root)
+min.set(_now.strftime("%M"))
+spin_min = tk.Spinbox(frm, increment=1, from_=0, to=59, textvariable=min)
+spin_min.grid(column=1, row=0)
 
-spin_min = tk.Spinbox(root, increment=1, from_=0, to=59)
-spin_min.pack()
+time_btn = tk.Button(frm, text="Schedule shutdown", command=set_time).grid(column=0, row=1)
 
-time_btn = tk.Button(root, text="Schedule shutdown", command=set_time)
-time_btn.pack()
-
-cancel_btn = tk.Button(root, text="Cancel shutdown", command=cancel_time)
-cancel_btn.pack()
+cancel_btn = tk.Button(frm, text="Cancel shutdown", command=cancel_time).grid(column=1, row=1)
 
 root.mainloop()
