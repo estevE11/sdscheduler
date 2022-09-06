@@ -39,8 +39,24 @@ def set_time():
 def cancel_time():
     os.system("shutdown -a")
 
+def cicle_hours():
+    selected_hour = int(spin_hour.get())
+    if selected_hour < 0:
+        hour.set(23)
+    elif selected_hour > 23:
+        hour.set(0)
+
+def cicle_min():
+    selected_min = int(spin_min.get())
+    if selected_min < 0:
+        min.set(59)
+    elif selected_min > 59:
+        min.set(0)
+        
+
 root = tk.Tk()
-root.title("Shutdown scheduler")
+root.resizable(False, False)
+root.title("SD Scheduler")
 root.iconbitmap("icon.ico")
 frm = tk.Frame(root)
 frm.grid()
@@ -49,12 +65,12 @@ _now = datetime.now()
 
 hour = tk.StringVar(root)
 hour.set(_now.strftime("%H"))
-spin_hour = tk.Spinbox(frm, increment=1, from_=0, to=23, textvariable=hour)
+spin_hour = tk.Spinbox(frm, increment=1, from_=-1, to=24, textvariable=hour, command=cicle_hours)
 spin_hour.grid(column=0, row=0)
 
 min = tk.StringVar(root)
 min.set(_now.strftime("%M"))
-spin_min = tk.Spinbox(frm, increment=1, from_=0, to=59, textvariable=min)
+spin_min = tk.Spinbox(frm, increment=1, from_=-1, to=60, textvariable=min, command=cicle_min)
 spin_min.grid(column=1, row=0)
 
 time_btn = tk.Button(frm, text="Schedule shutdown", command=set_time).grid(column=0, row=1)
