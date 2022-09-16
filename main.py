@@ -5,8 +5,6 @@ from datetime import datetime
 import math
 
 def get_sec_to_time(h, m, hh, mm):
-    now = datetime.now()
-        
     sec = 0
     if h < hh:
         sec = get_sec_to_time(24, 00, hh, mm) + get_sec_to_time(h, m, 0, 0)
@@ -24,6 +22,7 @@ def calc_sec_to_time(sec):
 
 def sum_time_to_current_time(h, m):
     now = datetime.now()
+
     ch = int(now.strftime("%H"))
     cm = int(now.strftime("%M"))
 
@@ -53,38 +52,29 @@ def cancel_time():
 def cicle_hours():
     check_0_val.set(True)
     check_1_val.set(False)
-    selected_hour = int(spin_hour.get())
-    if selected_hour < 0:
-        hour.set(23)
-    elif selected_hour > 23:
-        hour.set(0)
+    cicle_input(hour, spin_hour.get(), 0, 23)
 
 def cicle_min():
     check_0_val.set(True)
     check_1_val.set(False)
-    selected_min = int(spin_min.get())
-    if selected_min < 0:
-        min.set(59)
-    elif selected_min > 59:
-        min.set(0)
+    cicle_input(min, spin_min.get(), 0, 59)
 
 def cicle_hours_disc():
     check_0_val.set(False)
     check_1_val.set(True)
-    selected_hour_disc = int(spin_hour_disc.get())
-    if selected_hour_disc < 0:
-        hour_disc.set(23)
-    elif selected_hour_disc > 23:
-        hour_disc.set(0)
+    cicle_input(hour_disc, spin_hour_disc.get(), 0, 23)
 
 def cicle_min_disc():
     check_0_val.set(False)
     check_1_val.set(True)
-    selected_min_disc = int(spin_min_disc.get())
-    if selected_min_disc < 0:
-        min_disc.set(59)
-    elif selected_min_disc > 59:
-        min_disc.set(0)
+    cicle_input(min_disc, spin_min_disc.get(), 0, 59)
+
+def cicle_input(var, val, min, max):
+    val = int(val)
+    if val > max:
+        var.set(min)
+    elif val < min:
+        var.set(max)
 
 def check_0_trigger():
     if not check_0_val.get():
@@ -108,7 +98,9 @@ def update_time():
 def update_normal_time():
     selected_hour_disc = int(spin_hour_disc.get())
     selected_min_disc = int(spin_min_disc.get())
+
     h, m = sum_time_to_current_time(selected_hour_disc, selected_min_disc)
+    
     hour.set(h)
     min.set(m)
 
