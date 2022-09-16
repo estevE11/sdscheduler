@@ -1,3 +1,4 @@
+from tabnanny import check
 import tkinter as tk
 import os
 from datetime import datetime 
@@ -52,6 +53,18 @@ def cicle_min():
         min.set(59)
     elif selected_min > 59:
         min.set(0)
+
+def check_0_trigger():
+    if not check_0_val.get():
+        check_0_val.set(True)
+        return
+    check_1_val.set(False)
+
+def check_1_trigger():
+    if not check_1_val.get():
+        check_1_val.set(True)
+        return
+    check_0_val.set(False)
         
 
 root = tk.Tk()
@@ -63,18 +76,37 @@ frm.grid()
 
 _now = datetime.now()
 
+check_0_val = tk.BooleanVar(root)
+check_0_val.set(True)
+check_0 = tk.Checkbutton(frm, text="Exact time", variable=check_0_val, command=check_0_trigger)
+check_0.grid(column=0, row=0, sticky="W")
+
 hour = tk.StringVar(root)
 hour.set(_now.strftime("%H"))
 spin_hour = tk.Spinbox(frm, increment=1, from_=-1, to=24, textvariable=hour, command=cicle_hours)
-spin_hour.grid(column=0, row=0)
+spin_hour.grid(column=0, row=1)
 
 min = tk.StringVar(root)
 min.set(_now.strftime("%M"))
 spin_min = tk.Spinbox(frm, increment=1, from_=-1, to=60, textvariable=min, command=cicle_min)
-spin_min.grid(column=1, row=0)
+spin_min.grid(column=1, row=1)
 
-time_btn = tk.Button(frm, text="Schedule shutdown", command=set_time).grid(column=0, row=1)
+check_1_val = tk.BooleanVar(root)
+check_1 = tk.Checkbutton(frm, text="Count down", variable=check_1_val, command=check_1_trigger)
+check_1.grid(column=0, row=2, sticky="W")
 
-cancel_btn = tk.Button(frm, text="Cancel shutdown", command=cancel_time).grid(column=1, row=1)
+hour_disc = tk.StringVar(root)
+hour_disc.set(_now.strftime("%H"))
+spin_hour_disc = tk.Spinbox(frm, increment=1, from_=-1, to=24, textvariable=hour, command=cicle_hours)
+spin_hour_disc.grid(column=0, row=3)
+
+min_disc = tk.StringVar(root)
+min_disc.set(_now.strftime("%M"))
+min_disc = tk.Spinbox(frm, increment=1, from_=-1, to=60, textvariable=min, command=cicle_min)
+min_disc.grid(column=1, row=3)
+
+time_btn = tk.Button(frm, text="Schedule shutdown", command=set_time).grid(column=0, row=4)
+
+cancel_btn = tk.Button(frm, text="Cancel shutdown", command=cancel_time).grid(column=1, row=4)
 
 root.mainloop()
