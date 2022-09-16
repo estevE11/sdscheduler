@@ -2,7 +2,6 @@ from tabnanny import check
 import tkinter as tk
 import os
 from datetime import datetime 
-import math
 
 def get_sec_to_time(h, m, hh, mm):
     sec = 0
