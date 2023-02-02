@@ -2,6 +2,19 @@ from tabnanny import check
 import tkinter as tk
 import os
 from datetime import datetime 
+import platform
+
+OS = platform.system()
+OS_WINDOWS = 'Windows'
+OS_LINUX = 'Linux'
+
+def schedule_shutdown(sec):
+    if OS == OS_WINDOWS:
+        os.system("shutdown -s -t " + str(sec))
+
+def cancel_shutdown():
+    if OS == OS_WINDOWS:
+        os.system("shutdown -a")
 
 def get_sec_to_time(h, m, hh, mm):
     sec = 0
@@ -43,10 +56,10 @@ def set_time():
 
     sec = get_sec_to_time(selected_hour, selected_min, int(now.strftime("%H")), int(now.strftime("%M")))
 
-    os.system("shutdown -s -t " + str(sec))
+    schedule_shutdown(sec)
 
 def cancel_time():
-    os.system("shutdown -a")
+    cancel_shutdown()
 
 def cicle_hours():
     check_0_val.set(True)
