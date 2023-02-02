@@ -12,9 +12,15 @@ def schedule_shutdown(sec):
     if OS == OS_WINDOWS:
         os.system("shutdown -s -t " + str(sec))
 
+def schedule_shutdown_linux(h, m):
+    if OS == OS_LINUX:
+        os.system(f"shutdown {'0' if h < 10 else ''}{h}:{'0' if m < 10 else ''}{m}")
+ 
 def cancel_shutdown():
     if OS == OS_WINDOWS:
         os.system("shutdown -a")
+    elif OS == OS_LINUX:
+        os.system("shutdown -c")
 
 def get_sec_to_time(h, m, hh, mm):
     sec = 0
@@ -53,6 +59,10 @@ def set_time():
 
     selected_hour = int(spin_hour.get())
     selected_min = int(spin_min.get())
+
+    if OS == OS_LINUX:
+        schedule_shutdown_linux(selected_hour, selected_min)
+        return
 
     sec = get_sec_to_time(selected_hour, selected_min, int(now.strftime("%H")), int(now.strftime("%M")))
 
@@ -133,7 +143,7 @@ def update_countdown():
 root = tk.Tk()
 root.resizable(False, False)
 root.title("SD Scheduler")
-root.iconbitmap("icon.ico")
+#root.iconbitmap("icon.ico")
 frm = tk.Frame(root)
 frm.grid()
 
